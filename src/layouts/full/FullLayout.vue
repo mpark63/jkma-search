@@ -17,7 +17,7 @@ const customizer = useCustomizerStore();
       <v-main>
         <v-container fluid class="page-wrapper">
           <div>
-            <RouterView />
+            <RouterView :key="$route.fullPath" />
           </div>
         </v-container>
         <v-container fluid class="pt-0">
