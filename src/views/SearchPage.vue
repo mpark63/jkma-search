@@ -1,26 +1,13 @@
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue';
-
-import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
+import { ref } from 'vue';
 import UiParentCard from '@/components/shared/UiParentCard.vue';
+import TitleBar from '@/components/shared/TitleBar.vue';
 
-const page = ref({ title: 'Sample Page' });
-const breadcrumbs = shallowRef([
-  {
-    title: 'Others',
-    disabled: false,
-    href: '#'
-  },
-  {
-    title: 'Sample Page',
-    disabled: true,
-    href: '#'
-  }
-]);
+const page = ref({ title: 'Search Results' });
 </script>
 
 <template>
-  <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
+  <TitleBar :title="page.title"></TitleBar>
   <v-row>
     <v-col cols="12" md="12">
       <UiParentCard title="Simple Title">

@@ -7,44 +7,19 @@ const MainRoutes = {
   component: () => import('@/layouts/full/FullLayout.vue'),
   children: [
     {
-      name: 'LandingPage',
+      name: 'JKMA search - home',
       path: '/',
-      component: () => import('@/views/dashboards/default/DefaultDashboard.vue')
+      component: () => import('@/views/HomePage.vue')
     },
     {
-      name: 'Default',
-      path: '/dashboard/default',
-      component: () => import('@/views/dashboards/default/DefaultDashboard.vue')
+      name: 'JKMA search - results',
+      path: '/search/:query',
+      component: () => import('@/views/SearchPage.vue')
     },
     {
-      name: 'Starter',
-      path: '/starter',
-      component: () => import('@/views/StarterPage.vue')
-    },
-    {
-      name: 'Tabler Icons',
-      path: '/icons/tabler',
-      component: () => import('@/views/utilities/icons/TablerIcons.vue')
-    },
-    {
-      name: 'Material Icons',
-      path: '/icons/material',
-      component: () => import('@/views/utilities/icons/MaterialIcons.vue')
-    },
-    {
-      name: 'Typography',
-      path: '/utils/typography',
-      component: () => import('@/views/utilities/typography/TypographyPage.vue')
-    },
-    {
-      name: 'Shadows',
-      path: '/utils/shadows',
-      component: () => import('@/views/utilities/shadows/ShadowPage.vue')
-    },
-    {
-      name: 'Colors',
-      path: '/utils/colors',
-      component: () => import('@/views/utilities/colors/ColorPage.vue')
+      name: 'JKMA search - view pdf',
+      path: '/view/:id',
+      component: () => import('@/views/PdfPage.vue')
     }
   ]
 };
