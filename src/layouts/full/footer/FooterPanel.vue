@@ -3,16 +3,20 @@ import { shallowRef } from 'vue';
 
 const footerLink = shallowRef([
   {
-    title: 'Home',
-    url: 'https://berrydashboard.io/vue/free'
+    title: 'CLSP',
+    url: 'https://www.clsp.jhu.edu/'
   },
   {
-    title: 'Documentation',
-    url: 'https://codedthemes.gitbook.io/berry-vuetify/'
+    title: 'JKMA',
+    url: 'https://jkma.org/'
+  },
+  {
+    title: 'Github',
+    url: 'https://github.com/mpark63/jkma-search'
   },
   {
     title: 'Support',
-    url: 'https://codedthemes.support-hub.io/'
+    url: 'mailto:mpark63@jh.edu'
   }
 ]);
 </script>
@@ -21,7 +25,7 @@ const footerLink = shallowRef([
     <v-row justify="center" align="center" no-gutters>
       <v-col cols="12" sm="6">
         <p class="text-body-1 mb-0 text-sm-left text-center">
-          Berry ♥ crafted by Team
+          Developed by Minseo Park using the Berry template from
           <a href="https://themeforest.net/user/codedthemes" class="text-darkText text-decoration-none" target="_blank">Codedthemes</a>
         </p>
       </v-col>
