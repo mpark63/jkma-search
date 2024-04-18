@@ -1,21 +1,35 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import UiParentCard from '@/components/shared/UiParentCard.vue';
 import TitleBar from '@/components/shared/TitleBar.vue';
+import { onMounted, ref, shallowRef, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
-const page = ref({ title: 'View PDF' });
+const route = useRoute();
+const fileName = route.params.id;
+const url = shallowRef('https://corsproxy.io/?' + encodeURIComponent('https://www.jkma.org/upload/pdf/' + fileName));
+const loading = ref(true);
+const embedElement = ref();
+
+onMounted(() => {
+  embedElement.value = document.getElementById('pdf-viewer');
+});
+
+// watch works directly on a ref
+watch(embedElement, async () => {
+  if (embedElement.value) {
+    embedElement.value.addEventListener('load', function () {
+      // Operate upon the SVG DOM here
+      loading.value = false;
+    });
+  }
+});
 </script>
 
 <template>
-  <TitleBar :title="page.title"></TitleBar>
-  <v-row>
-    <v-col cols="12" md="12">
-      <UiParentCard title="Simple Title">
-        Lorem ipsum dolor sit amen, consenter nipissing eli, sed do elusion tempos incident ut laborers et doolie magna alissa. Ut enif ad
-        minim venice, quin nostrum exercitation illampu laborings nisi ut liquid ex ea commons construal. Duos aube grue dolor in
-        reprehended in voltage veil esse colum doolie eu fujian bulla parian. Exceptive sin ocean cuspidate non president, sunk in culpa qui
-        officiate descent molls anim id est labours.
-      </UiParentCard>
+  <v-row class="d-flex justify-center align-center">
+    <v-col cols="12" md="8">
+      <TitleBar title="View PDF"></TitleBar>
+      <v-progress-linear v-if="loading" indeterminate color="primary"></v-progress-linear>
+      <embed id="pdf-viewer" :src="url" width="100%" height="800" type="application/pdf" />
     </v-col>
   </v-row>
 </template>
