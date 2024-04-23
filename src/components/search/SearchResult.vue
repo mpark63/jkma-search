@@ -19,7 +19,7 @@ function viewPdf() {
     <v-card-item>
       <div class="d-sm-flex align-center cursor-pointer" @click="viewPdf">
         <div class="d-flex flex-column">
-          <v-card-title>{{ props.title }}</v-card-title>
+          <v-card-title>{{ props.title || props.pdfName }}</v-card-title>
           <v-card-title class="text-caption">Authors: {{ props.author }}</v-card-title>
           <!-- <v-card-title class="text-caption">PDF name: {{ props.pdfName }}</v-card-title> -->
         </div>

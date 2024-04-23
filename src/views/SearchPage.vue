@@ -1,34 +1,48 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import TitleBar from '@/components/shared/TitleBar.vue';
-// import { articles } from '@/utils/helpers/fake-data';
 import SearchResult from '@/components/search/SearchResult.vue';
 import SearchApplicationClient from '@elastic/search-application-client';
 import { onMounted, ref } from 'vue';
-// import Client from '@elastic/search-application-client';
+import { watch } from 'vue';
 
+const request = SearchApplicationClient(
+  'jkma-api', // search application name
+  'https://corsproxy.io/?https://df3eda039ead43488344961c75152714.us-central1.gcp.cloud.es.io:443', // url-host
+  'RF9SR0NJOEJJN0pMSC1jV3BFU2o6ZVRBM0l6cndTYlc0X0dPQnFIbUZGZw=='
+);
 const route = useRoute();
-const query = route.params.query;
+const query = ref(route.params.query as string);
 const loading = ref(false);
 const results = ref();
+// const numPages = ref();
+// const page = ref(1);
 
-console.log(query);
-onMounted(async () => {
+const search = async () => {
   loading.value = true;
-  const request = SearchApplicationClient(
-    'jkma-api', // search application name
-    'https://corsproxy.io/?https://df3eda039ead43488344961c75152714.us-central1.gcp.cloud.es.io:443', // url-host
-    'RF9SR0NJOEJJN0pMSC1jV3BFU2o6ZVRBM0l6cndTYlc0X0dPQnFIbUZGZw==',
-    {},
-    { headers: { mode: 'no-cors', 'Content-Type': 'application/json' } }
-  );
   const response = await request()
-    .query(query as string)
+    .addParameter('query_string', query.value)
+    // .setPageSize(10)
+    // .setFrom(10 * (page.value - 1))
     .search();
 
+  // numPages.value = Math.ceil(response.hits.total.value / 12);
   results.value = response.hits.hits;
   loading.value = false;
+};
+
+onMounted(async () => {
+  await search();
 });
+
+watch(query, async () => {
+  await search();
+});
+
+// watch(page, async () => {
+//   console.log(page.value);
+//   await search();
+// });
 </script>
 
 <template>
@@ -44,6 +58,9 @@ onMounted(async () => {
         :author="result._source.author"
         :snippet="result._source.pages[1].slice(0, 200)"
       />
+      <!-- <div class="text-center">
+        <v-pagination v-model="page" :length="numPages" next-icon="mdi-menu-right" prev-icon="mdi-menu-left"></v-pagination>
+      </div> -->
     </v-col>
   </v-row>
 </template>
