@@ -2,8 +2,9 @@
 import { router } from '@/router';
 
 const props = defineProps({
+  title: String,
+  author: String,
   pdfName: String,
-  link: String,
   snippet: String
 });
 
@@ -16,9 +17,12 @@ function viewPdf() {
 <template>
   <v-card variant="flat" class="mb-2">
     <v-card-item>
-      <div class="d-sm-flex align-center justify-space-between cursor-pointer" @click="viewPdf">
-        <v-card-title>{{ props.pdfName }}</v-card-title>
-        <v-card-title class="text-caption">{{ props.link }}</v-card-title>
+      <div class="d-sm-flex align-center cursor-pointer" @click="viewPdf">
+        <div class="d-flex flex-column">
+          <v-card-title>{{ props.title }}</v-card-title>
+          <v-card-title class="text-caption">Authors: {{ props.author }}</v-card-title>
+          <!-- <v-card-title class="text-caption">PDF name: {{ props.pdfName }}</v-card-title> -->
+        </div>
       </div>
     </v-card-item>
     <v-divider></v-divider>
