@@ -19,7 +19,8 @@ const MainRoutes = {
     {
       name: 'JKMA search - view pdf',
       path: '/view/:id',
-      component: () => import('@/views/PdfPage.vue')
+      component: () => import('@/views/PdfPage.vue'),
+      props: true
     }
   ]
 };

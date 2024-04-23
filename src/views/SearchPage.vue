@@ -7,9 +7,9 @@ import { onMounted, ref } from 'vue';
 import { watch } from 'vue';
 
 const request = SearchApplicationClient(
-  'jkma-api', // search application name
+  'jkma-pages-api', // search application name
   'https://corsproxy.io/?https://df3eda039ead43488344961c75152714.us-central1.gcp.cloud.es.io:443', // url-host
-  'RF9SR0NJOEJJN0pMSC1jV3BFU2o6ZVRBM0l6cndTYlc0X0dPQnFIbUZGZw=='
+  'N3huLUNZOEJkQ0ZGV3BvX0VfTmU6RUVueHpvamFRSXVXekVVeHdFOVZRUQ=='
 );
 const route = useRoute();
 const query = ref(route.params.query as string);
@@ -22,7 +22,7 @@ const search = async () => {
   loading.value = true;
   const response = await request()
     .addParameter('query_string', query.value)
-    // .setPageSize(10)
+    // .setPageSize(20)
     // .setFrom(10 * (page.value - 1))
     .search();
 
@@ -53,10 +53,11 @@ watch(query, async () => {
       <SearchResult
         v-for="result in results"
         :key="result._id"
-        :pdfName="result._source.pdf"
+        :pdfName="result._source.url.replace('https://www.jkma.org/upload/pdf/', '')"
+        :pageNumber="result._source.pageNumber"
         :title="result._source.title"
         :author="result._source.author"
-        :snippet="result._source.pages[1].slice(0, 200)"
+        :snippet="result._source.text.substring(30, 230) + '...'"
       />
       <!-- <div class="text-center">
         <v-pagination v-model="page" :length="numPages" next-icon="mdi-menu-right" prev-icon="mdi-menu-left"></v-pagination>

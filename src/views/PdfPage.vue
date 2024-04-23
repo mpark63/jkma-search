@@ -5,6 +5,7 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const fileName = route.params.id;
+const pageNumber = route.query.page;
 const url = shallowRef('https://corsproxy.io/?' + encodeURIComponent('https://www.jkma.org/upload/pdf/' + fileName));
 const loading = ref(true);
 const embedElement = ref();
@@ -29,7 +30,8 @@ watch(embedElement, async () => {
     <v-col cols="12" md="8">
       <TitleBar title="View PDF"></TitleBar>
       <v-progress-linear v-if="loading" indeterminate color="primary"></v-progress-linear>
-      <embed id="pdf-viewer" :src="url" width="100%" height="800" type="application/pdf" />
+      <!-- <embed id="pdf-viewer" :src="url" width="100%" height="800" type="application/pdf" /> -->
+      <object id="pdf-viewer" type="application/pdf" :data="url + '#page=' + pageNumber" width="100%" height="800"></object>
     </v-col>
   </v-row>
 </template>
